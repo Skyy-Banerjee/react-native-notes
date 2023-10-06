@@ -1,26 +1,46 @@
-import { View, StyleSheet} from 'react-native';
-import Box from './components/Box';
+import { View, StyleSheet, Text, SafeAreaView, Platform } from 'react-native';
+import CustomButton from './components/CustomButton/CustomButton';
 
 export default function App() {
 	return (
-		//<View style={{backgroundColor: "green", flex:1}}></View>
-		<View style={styles.container}>
-			<Box style={{ backgroundColor: '#8e9b00', top:75, left:75 }}>1</Box>
-			<Box style={{ backgroundColor: '#b65d1f' }}>2</Box>
-			<Box style={{ backgroundColor: '#1c4c56' }}>3</Box>
-			<Box style={{ backgroundColor: '#ab9156',position: 'absolute', top:75, left:75}}>4</Box>
-			<Box style={{ backgroundColor: '#6b0803' }}>5</Box>
-			<Box style={{ backgroundColor: '#1c4c',  }}>6</Box>
-			<Box style={{ backgroundColor: '#b95f21' }}>7</Box>
-		</View>
+		<SafeAreaView style={styles.safeContainer}>
+			<View style={styles.container}>
+				<View style={styles.box}>
+					<Text style={styles.text}>Welcome</Text>
+					<CustomButton title="Press me!" onPress={() => alert('Pressed')} />
+				</View>
+			</View>
+		</SafeAreaView>
 	);
 }
 
 const styles = StyleSheet.create({
+	safeContainer: {
+		flex: 1,
+		backgroundColor: 'plum',
+	},
 	container: {
 		flex: 1,
-		marginTop: 64,
-		borderWidth: 6,
-		borderColor: 'red',
+		backgroundColor: 'plum',
+		paddingTop: Platform.OS === 'android' ? 20 : 0,
+	},
+	box: {
+		padding: 20,
+	},
+	text: {
+		...Platform.select({
+			ios: {
+				color: 'purple',
+				fontSize: 24,
+				fontStyle: 'italic',
+			},
+			android: {
+				color: 'blue',
+				fontSize: 30,
+			},
+		}),
+		// fontSize: 24,
+		fontWeight: 'bold',
+		textAlign: 'center',
 	},
 });
